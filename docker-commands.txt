@@ -1,0 +1,54 @@
+docker ps
+
+docker images
+
+docker build -t feeback-node:volumes . 
+
+docker build . : Build a Dockerfile and create your own Image based on the file
+-t NAME:TAG : Assign a NAME and a TAG to an image
+
+docker logs 97d70a682606  
+
+docker run -p 3000:80 -d --name feedback-test-2 -v "C:\Users\grigo\OneDrive\Desktop\DockerCourse\4.data-volumes-01-starting-setup:/app"  -v feedback:/app/feedback -v /app/node_modules 4c573d3cfe9c0a764f607436640900e7d4f453f23045cbf2f7f1406175ad3c97
+
+docker rmi feeback-node:volumes
+
+docker rm CONTAINER
+
+docker container prune : Remove all stopped containers
+docker image prune : Remove all dangling images (untagged images)
+-a : Remove all locally stored images
+docker push IMAGE : Push an image to DockerHub (or another registry) - the image name/
+tag must include the repository name/ url
+docker pull IMAGE : Pull (download) an image from DockerHub (or another registry) - this
+is done automatically if you just docker run IMAGE and the image wasn't pulled before
+
+// read-only volumes vs. read-write
+docker run -p 3000:80 -d --name feedback-test-2 -v "C:\Users\grigo\OneDrive\Desktop\DockerCourse\4.data-volumes-01-starting-setup:/app:ro" -v /app/temp  -v feedback:/app/feedback -v /app/node_modules 20d452576a5974a097c07d286374df63d4b1cb60b8f0bb0d58fd255293e93e8f  
+
+docker volume ls
+
+docker volume inspect feedback
+
+docker volume rm feedback-files
+
+
+docker run IMAGE_NAME : Create and start a new container based on image IMAGENAME (or
+use the image id)
+--name NAME : Assign a NAME to the container. The name can be used for stopping and
+removing etc.
+-d : Run the container in detached mode - i.e. output printed by the container is not
+visible, the command prompt / terminal does NOT wait for the container to stop
+-it : Run the container in "interactive" mode - the container / application is then
+prepared to receive input via the command prompt / terminal. You can stop the
+container with CTRL + C when using the -it flag
+--rm : Automatically remove the container when it's stopped
+
+
+
+docker run -p 3000:8000 --env PORT=8000 -d --name feedback-test-5 -v "C:\Users\grigo\OneDrive\Desktop\DockerCourse\4.data-volumes-01-starting-setup:/app:ro" -v /app/temp  -v feedback:/app/feedback -v /app/node_modules 0cbcdd793d389dc54d65efd50e0eda441164efb2f3622d6665587372eda66965
+
+docker run -p 3000:8000 --env-file ./.env -d --name feedback-test-5 -v "C:\Users\grigo\OneDrive\Desktop\DockerCourse\4.data-volumes-01-starting-setup:/app:ro" -v /app/temp  -v feedback:/app/feedback -v /app/node_modules 0cbcdd793d389dc54d65efd50e0eda441164efb2f3622d6665587372eda66965
+
+# ARGuments
+docker build -t feeback-node:web-app --build-arg DEFAULT_PORT=8000 .
