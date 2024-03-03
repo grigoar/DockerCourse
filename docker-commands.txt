@@ -55,3 +55,13 @@ docker build -t feeback-node:web-app --build-arg DEFAULT_PORT=8000 .
 
 # Network communication
 docker run -d --name mongodb --network favorites-net mongo
+
+  // 'mongodb://host.docker.internal:27017/swfavorites',
+  // 'mongodb://172.17.0.2:27017/swfavorites',
+  // 'mongodb://localhost:27017/swfavorites',
+  // container name
+  // 'mongodb://mongodb:27017/swfavorites',
+
+  docker run --name mongodb --rm -d --network goals-net -v data:/data/db -e MONGO_INITDB_ROOT_USERNAME=grig -e MONGO_INITDB_ROOT_PASSWORD=secret mongo
+
+  docker run --name mongodb --rm -d --network goals-net -v data:/data/db mongo      
