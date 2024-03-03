@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - data:/data/db
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: example
+    # - MONGO_INITDB_DATABASE=example
+    env_file:
+      - ./env/mongo.env
+    # by default, the mongo container will create a default network for us
+    # networks:
+    #   - goals-net
+  backend:
+    # this would work if we had a Dockerfile in the backend folder
+    build: ./backend
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    # args:
+    #  some-arg: 1
+    ports:
+      - 80:80
+    volumes:
+      # named volume
+      - logs:/app/logs
+      # Bind mount the backend folder to the /app folder in the container
+      - ./backend:/app
+      # anonymous volume
+      - /app/node_modules
+
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      # bind mount the frontend folder to the /app/src folder in the container
+      - ./frontend/src:/app/src
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    # env_file:
+    #   - ./env/frontend.env
+    depends_on:
+      - backend
+
+volumes:
+  data:
+  logs:
+
