@@ -65,3 +65,7 @@ docker run -d --name mongodb --network favorites-net mongo
   docker run --name mongodb --rm -d --network goals-net -v data:/data/db -e MONGO_INITDB_ROOT_USERNAME=grig -e MONGO_INITDB_ROOT_PASSWORD=secret mongo
 
   docker run --name mongodb --rm -d --network goals-net -v data:/data/db mongo      
+
+  docker exec -it wonderful_lewin npm init 
+
+  docker compose run npm init
