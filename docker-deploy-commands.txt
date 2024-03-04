@@ -1,0 +1,24 @@
+ ssh -i "example-1.pem" ec2-user@ec2-16-171-175-108.eu-north-1.compute.amazonaws.com
+
+sudo yum update -y
+sudo yum install nginx
+
+ sudo yum install docker
+
+//build image
+ docker build -t node-dep-example-1 . 
+
+// rename (copy image to different image)
+ docker tag node-dep-example-1 grigoar/node-example-1
+
+// push to docker hub
+docker push grigoar/node-example-1
+
+// start docker on EC2
+ sudo systemctl start docker
+
+// run docker container (will search on dockerhub)
+ sudo docker run -d --rm -p 80:80 grigoar/node-example-1
+
+ // update image 
+ sudo docker pull grigoar/node-example-1
