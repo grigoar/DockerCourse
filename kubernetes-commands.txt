@@ -64,3 +64,10 @@ kubectl delete -f deployment.yaml
 
 // delete by label
 kubectl delete deployments,services -l group=example
+
+// get the persistent volumes
+kubectl get pv
+kubectl get pvc
+
+// get the storage class
+kubectl get sc
