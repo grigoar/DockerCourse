@@ -1,0 +1,66 @@
+//build the immage
+docker build -t name .
+
+minikube status
+
+minikube start
+
+kubectl get deployments
+
+kubectl get pods
+
+kubectl delete deployment first-app
+
+// push the image to docker hub first
+
+// create deployment (with one image or multiple images/containers)
+kubectl create deployment first-app --image=grigoar/kub-first-app
+
+// create a service so the pods have an reachable IP, so we can access them
+// LoadBalancer option is great for assigning an IP but also redistribute the traffic if needed(there are other types-ClusterIP..)
+kubectl expose deployment first-app --port=8080 --type=LoadBalance 
+
+kubectl get services
+
+// This will assign an IP so we can access the app(this is only needed locally, because the IP will be provided if using an LoadBalancer)
+minikube service first-app
+
+// Assigning more replicas
+kubectl scale deployment/first-app --replicas=3
+
+// Updating the deployment - needs to update the version for the minikube to detect the changes (update image=> push => set deployment)
+kubectl set image deployment/first-app kub-first-app=grigoar/kub-first-app:2
+
+// to check if the pod was updated 
+kubectl rollout status deployment/first-app
+
+// rollback to previous deployment
+kubectl rollout undo deployment/first-app deployment
+
+// rollback to specific revision
+kubectl rollout undo --to-revision=1 deployment/first-app 
+
+// see history of deployments
+kubectl rollout history deployment/first-app
+
+kubectl rollout history deployment/first-app --revision=3
+
+// rollback to specific revision
+kubectl rollout undo deployment/first-app --to-revision=1 
+
+kubectl delete service first-app 
+
+kubectl delete deployment first-app
+
+
+// DEPLOY kubernates deployment declarative configuration
+kubectl apply -f deployment.yaml
+
+// DEPLOY kubernates service
+kubectl apply -f service.yaml
+
+// Deleting the stack created
+kubectl delete -f deployment.yaml
+
+// delete by label
+kubectl delete deployments,services -l group=example

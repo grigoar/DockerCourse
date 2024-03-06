@@ -1,0 +1,54 @@
+apiVersion: v1
+
+kind: Service
+
+metadata:
+  name: backend
+
+spec:
+  # Selecting the pod with the labels desired
+  selector:
+    app: second-app
+    # tier: backend
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080
+    # - protocol: 'TCP'
+    #   port: 443
+    #   targetPort: 443
+  # type: ClusterIP
+  # type: NodeIP
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: second-app-deployment
+spec:
+  replicas: 1
+  # This makes sure what pods should be controlled by the deployment based on the labels of the pods
+  selector:
+    matchLabels:
+      app: second-app
+
+  # this is a pod
+  template:
+    metadata:
+      labels:
+        app: second-app
+        tier: backend
+    spec:
+      # one or multiple containers
+      containers:
+        - name: second-node
+          image: grigoar/kub-first-app:2
+        # - name: second-node
+        #   image:
+
+---
+
+
