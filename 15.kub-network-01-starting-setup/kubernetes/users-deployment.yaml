@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: users-deployment
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+        - name: users
+          image: grigoar/kub-demo-users:latest
+          env:
+            - name: AUTH_ADDRESS
+              # ? When multiple containers in the same pod can use localhost
+              # value: localhost
+              # value: '10.10.10.10'
+              # ? can use the service name
+              value: 'auth-service.default'
+        # - name: auth
+        #   image: grigoar/kub-demo-auth:latest
+

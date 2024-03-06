@@ -71,3 +71,6 @@ kubectl get pvc
 
 // get the storage class
 kubectl get sc
+
+// delete all
+kubectl delete all --all
