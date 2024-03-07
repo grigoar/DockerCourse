@@ -60,8 +60,8 @@ docker run --name goals-frontend \
 ---------------------
 Stop all Containers
 ---------------------
-deploy-docker-user
-https://194589683843.signin.aws.amazon.com/console
 
 docker stop mongodb goals-backend goals-frontend
 
+deploy-docker-user
+https://194589683843.signin.aws.amazon.com/console
