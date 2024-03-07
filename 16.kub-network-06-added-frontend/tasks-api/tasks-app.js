@@ -62,13 +62,11 @@ app.post('/tasks', async (req, res) => {
           env: JSON.stringify(process.env, null, 2),
         });
       }
-      res
-        .status(201)
-        .json({
-          message: 'Task stored.',
-          createdTask: task,
-          env: JSON.stringify(process.env, null, 2),
-        });
+      res.status(201).json({
+        message: 'Task stored.',
+        createdTask: task,
+        env: JSON.stringify(process.env, null, 2),
+      });
     });
   } catch (err) {
     return res.status(401).json({ message: 'Could not verify token.' });
